@@ -1,0 +1,171 @@
+:root {
+  /* Your brand colors */
+  --brand-color: #007bff;
+  --box-color: #ffc107;
+  --cart-color: #555;
+--overlay-background: transparent;
+}
+
+.loader-container {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--overlay-background);
+    overflow: hidden;
+}
+
+.cart-loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+/* Box styles with synchronized animation */
+.box {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: -40px;
+  left: 35px;
+  background-color: var(--box-color);
+  border: 2px solid rgba(0,0,0,0.1);
+  animation: drop 2.5s infinite cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+
+/* Cart styles with synchronized animation */
+.cart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  animation: slide 2.5s infinite cubic-bezier(0.785, 0.135, 0.150, 0.860);
+}
+
+/* Box animation keyframes with your preferred values */
+@keyframes drop {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+  20% { transform: translateY(90px) rotate(0deg); opacity: 1; }   /* Your value for a deep landing */
+  30% { transform: translateY(80px) rotate(-5deg); }             /* Your value for the bounce */
+  40% { transform: translateY(90px) rotate(0deg); }             /* Your value for a deep landing */
+  50% { opacity: 1; }
+  60% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Cart animation keyframes */
+@keyframes slide {
+  0% { transform: translateX(200px); opacity: 0; }
+  20% { transform: translateX(0); opacity: 1; }
+  60% { transform: translateX(0); }
+  80% { transform: translateX(-250px); }
+  100% { transform: translateX(-250px); }
+}
+
+/* Cart structural styling */
+.cart-basket {
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: 5px solid var(--cart-color);
+  border-bottom: 10px solid var(--cart-color);
+  border-radius: 5px;
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+}
+
+.cart-handle {
+  position: absolute;
+  right: -20px;
+  top: -10px;
+  width: 20px;
+  height: 30px;
+  border: 5px solid var(--cart-color);
+  border-left: none;
+  border-radius: 0 15px 15px 0;
+}
+
+.cart-wheel-left, .cart-wheel-right {
+  position: absolute;
+  bottom: -12px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--cart-color);
+  border-radius: 50%;
+}
+.cart-wheel-left { left: 10px; }
+.cart-wheel-right { right: 10px; }
+
+
+/* --- Styles for Rating Summary (inside product details) --- */
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  color: #555;
+}
+
+.rating-summary .total-reviews {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.star-rating {
+  font-size: 1.2rem;
+}
+
+.star.filled {
+  color: #ffc107; /* Gold color for filled stars */
+}
+
+
+/* --- Styles for the Main Reviews Section --- */
+.product-reviews-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px 40px;
+  font-family: Arial, sans-serif;
+  border-top: 1px solid #ccc;
+}
+
+.product-reviews-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.review-item {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-author {
+  font-weight: bold;
+}
+
+.review-date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.review-item .star-rating {
+  margin-bottom: 10px;
+}
+
+.review-comment {
+  line-height: 1.6;
+  color: #333;
+}

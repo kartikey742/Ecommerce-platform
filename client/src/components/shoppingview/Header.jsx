@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LuWarehouse } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { ProfileDropdown } from '../common/ProfileDropdown';
+import { useNavigate } from 'react-router-dom';
 export const shoppingViewHeaderMenuItems = [
   {
     id: "home",
@@ -46,6 +47,7 @@ export const shoppingViewHeaderMenuItems = [
   },
 ];
 export const Header = () => {
+  const navigate=useNavigate()
   return (
     <div className='shoppingheader'>
       <div id='logo'>
@@ -60,7 +62,7 @@ export const Header = () => {
       }
       </div>
     <div id='logo'>
-      <MdOutlineShoppingCart  size={25}/>
+      <MdOutlineShoppingCart  size={25} onClick={()=>navigate("/shop/cart")} cursor="pointer"/>
       <ProfileDropdown />   
     </div>
     </div>

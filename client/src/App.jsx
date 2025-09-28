@@ -4,6 +4,8 @@
   import './css/login.css'
   import './css/product.css'
   import './css/shopping.css'
+  import './css/DetailsPage.css'
+  import './css/common.css'
   import { Navigate, Route, Routes } from 'react-router-dom'
 import {UserLayout} from './components/auth/layout'
 import {Register} from './pages/auth/register'
@@ -25,6 +27,8 @@ import {setUser,setIsLoading,setIsAuthenticated   } from './store/authSlice'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { DetailsPage } from './pages/shoppingview/DetailsPage'
+import {Cart} from './pages/Cart'
   function App() {
       const navigate = useNavigate();
     const dispatch=useDispatch();
@@ -88,6 +92,8 @@ useEffect(() => {
         <Route path='listing' element={<Listing/>}/>
         <Route path='account' element={<Account/>}/>
         <Route path='checkout' element={<Checkout/>}/>
+        <Route path='product/:productId' element={<DetailsPage />} />
+        <Route path='cart' element={<Cart />} />
         </Route> 
         <Route path='unauth-page' element={<Unauthpage></Unauthpage>}/>
       </Routes>

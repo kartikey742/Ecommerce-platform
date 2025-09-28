@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 export const filterOptions = {
   category: [
     { id: "men", label: "Men" },
@@ -16,7 +17,30 @@ export const filterOptions = {
     { id: "h&m", label: "H&M" },
   ],
 };
-export const ProductFilter = () => {
+export const ProductFilter = ({ category, setCategory, brand, setBrand }) => {
+
+  const handleBrand=(id)=>{
+    if(brand.includes(id)){
+      setBrand(brand.filter((b)=>b!==id))
+      localStorage.setItem('brand',JSON.stringify(brand.filter((b)=>b!==id)))
+    }else{
+      setBrand([...brand,id])
+      localStorage.setItem('brand',JSON.stringify([...brand,id]))
+    }
+  }
+
+
+  const handleCategory=(id)=>{
+    if(category.includes(id)){
+      setCategory(category.filter((c)=>c!==id))
+      localStorage.setItem('category',JSON.stringify(category.filter((c)=>c!==id)))
+    }else{
+      setCategory([...category,id])
+      localStorage.setItem('category',JSON.stringify([...category,id]))
+    }
+    
+  }
+  
   return (
     <div id='mainproductfilter'>
       <h2>Filter Products</h2>
@@ -25,7 +49,7 @@ export const ProductFilter = () => {
         <ul>
           {filterOptions.category.map(option => (
             <li key={option.id}>
-              <input type="checkbox" id={option.id} />
+              <input type="checkbox" id={option.id} checked={category.includes(option.id)} onChange={() => handleCategory(option.id)} />
               <label htmlFor={option.id}>{option.label}</label>
             </li>
           ))}
@@ -35,8 +59,8 @@ export const ProductFilter = () => {
         <h3>Brand</h3>
         <ul>
           {filterOptions.brand.map(option => (
-            <li key={option.id}>
-              <input type="checkbox" id={option.id} />
+            <li key={option.id} >
+              <input type="checkbox" id={option.id} checked={brand.includes(option.id)} onChange={() => handleBrand(option.id)} />
               <label htmlFor={option.id}>{option.label}</label>
             </li>
           ))}

@@ -16,7 +16,7 @@ import { Products } from './pages/adminview/Products'
 import { Orders } from './pages/adminview/Orders'
 import {Features} from './pages/adminview/Features'
 import { ShoppingLayout } from './components/shoppingview/ShoppingLayout'
-import { Home } from './components/shoppingview/Home'
+import { Home } from './pages/shoppingview/Home'
 import { Listing } from './pages/shoppingview/Listing'
 import { Account } from './components/shoppingview/Account'
 import { Checkout } from './components/shoppingview/Checkout'
@@ -29,6 +29,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { DetailsPage } from './pages/shoppingview/DetailsPage'
 import {Cart} from './pages/Cart'
+import { Header } from './components/shoppingview/Header'
+
   function App() {
       const navigate = useNavigate();
     const dispatch=useDispatch();
@@ -75,8 +77,9 @@ useEffect(() => {
   }
     return (
       <div> 
+        <Header>  </Header>
       <Routes>
-        <Route path='/' element={<div><button onClick={()=>{handle('consumer')}}>super login consumer</button><button onClick={()=>{handle('admin')}}>super login admin</button></div>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/auth' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><UserLayout/></CheckAuth>}>
           <Route path='register' element={<Register/>}/>
           <Route path='login' element={<Login/>}/>
@@ -88,7 +91,6 @@ useEffect(() => {
         <Route path='orders' element={<Orders/>}/>
         </Route>
         <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><ShoppingLayout/></CheckAuth>}>
-        <Route path='home' element={<Home/>}/>
         <Route path='listing' element={<Listing/>}/>
         <Route path='account' element={<Account/>}/>
         <Route path='checkout' element={<Checkout/>}/>

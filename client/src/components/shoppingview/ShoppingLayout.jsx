@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom'
 export const ShoppingLayout = () => {
   return (
     <div>
-        <Header/>
         <Outlet></Outlet>
     </div>
   )

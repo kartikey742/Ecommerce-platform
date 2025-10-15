@@ -4,11 +4,12 @@ import { LuWarehouse } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { ProfileDropdown } from '../common/ProfileDropdown';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 export const shoppingViewHeaderMenuItems = [
   {
     id: "home",
     label: "Home",
-    path: "/shop/home",
+    path: "/",
   },
   {
     id: "products",
@@ -18,27 +19,27 @@ export const shoppingViewHeaderMenuItems = [
   {
     id: "men",
     label: "Men",
-    path: "/shop/listing",
+    path: "/shop/listing?category=men",
   },
   {
     id: "women",
     label: "Women",
-    path: "/shop/listing",
+    path: "/shop/listing?category=women",
   },
   {
     id: "kids",
     label: "Kids",
-    path: "/shop/listing",
+    path: "/shop/listing?category=kids",
   },
   {
     id: "footwear",
     label: "Footwear",
-    path: "/shop/listing",
+    path: "/shop/listing?category=footwear",
   },
   {
     id: "accessories",
     label: "Accessories",
-    path: "/shop/listing",
+    path: "/shop/listing?category=accessories",
   },
   {
     id: "search",
@@ -47,6 +48,7 @@ export const shoppingViewHeaderMenuItems = [
   },
 ];
 export const Header = () => {
+  const {user}=useSelector((state)=>state.auth)
   const navigate=useNavigate()
   return (
     <div className='shoppingheader'>
@@ -61,10 +63,16 @@ export const Header = () => {
         })
       }
       </div>
-    <div id='logo'>
+      {user?
+        (<div id='logo'>
       <MdOutlineShoppingCart  size={25} onClick={()=>navigate("/shop/cart")} cursor="pointer"/>
       <ProfileDropdown />   
+    </div>):
+    <div id='logo'>
+      <button onClick={()=>navigate("/auth/login")}>Login</button>
+      <button onClick={()=>navigate("/auth/register")}>Register</button>
     </div>
+    }
     </div>
    
   )

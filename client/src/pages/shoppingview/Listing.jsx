@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ProductFilter } from '../../components/shoppingview/ProductFilter'
-import { BiSortAlt2 } from "react-icons/bi";
+import { BiSortAlt2, BiGrid, BiList } from "react-icons/bi";
+import { FiSearch, FiFilter } from "react-icons/fi";
 import {toast} from "react-toastify";
-import { useNavigate } from 'react-router-dom';
- const sortOptions = [
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+
+const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },
   { id: "price-hightolow", label: "Price: High to Low" },
   { id: "title-atoz", label: "Title: A to Z" },
@@ -12,108 +15,211 @@ import { useNavigate } from 'react-router-dom';
 
 export const Listing = () => {
   const [openDialog, setOpenDialog] = useState(false);
- const [selectedSort, setSelectedSort] = useState("Price: Low to High");
-  const [products, setProducts] = useState([])
+  const [selectedSort, setSelectedSort] = useState("Price: Low to High");
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [brand, setBrand] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
+  const [showFilters, setShowFilters] = useState(false);
+  
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-    const [category, setCategory] =useState(JSON.parse(localStorage.getItem('category'))||[]);
-  const [brand, setBrand] = useState(JSON.parse(localStorage.getItem('brand'))||[]);
-  const navigate=useNavigate()
-   useEffect(()=>{
-    const params=new URLSearchParams()
-    if(category.length) params.append('category',category.join(','))  
-    if(brand.length) params.append('brand',brand.join(','))
-     params.append('sortBy',selectedSort)
-      console.log(params.toString());
-     const getProducts=async()=> {  
-       const toastId = toast.loading("Loading products...");
-      try{
-        const res=await fetch(process.env.REACT_APP_BASE_URL+"/shop/products/get/?"+params.toString())
-        const data=await res.json()
-        setProducts(data?.data)
-      toast.update(toastId, { 
-      render: "Products loaded successfully!", 
-      type: "success", 
-      isLoading: false, 
-      autoClose: 3000 
-    });
-      }catch(e){
+ useEffect(() => {
+    const cat = searchParams.get('category');
+    const brd = searchParams.get('brand');
+    if (cat) setCategory([cat]);
+    if (brd) setBrand([brd]);
+  }, [searchParams]);
+
+  // This effect fetches products whenever a filter or sort option changes
+  useEffect(() => {
+    const getProducts = async () => {
+      const params = new URLSearchParams();
+      if (category.length) params.append('category', category.join(','));
+      if (brand.length) params.append('brand', brand.join(','));
+      params.append('sortBy', selectedSort);
+
+      const toastId = toast.loading("Loading products...");
+      try {
+        const res = await fetch(`${process.env.REACT_APP_BASE_URL}/shop/products/get/?${params.toString()}`);
+        const data = await res.json();
+        setProducts(data?.data || []);
+        toast.update(toastId, { render: "Products loaded!", type: "success", isLoading: false, autoClose: 2000 });
+      } catch (e) {
         console.log(e);
-           toast.update(toastId, { 
-      render: "Failed to load products.", 
-      type: "error", 
-      isLoading: false, 
-      autoClose: 3000 
-    });
-        
+        toast.update(toastId, { render: "Failed to load products.", type: "error", isLoading: false, autoClose: 3000 });
       }
-  }
-  getProducts()  
-      
-  },[category,brand,selectedSort])
- 
- 
+    };
+    getProducts();
+  }, [category, brand, selectedSort]);
 
-console.log(products);
+
 
   const handleSelect = (option) => {
     setSelectedSort(option.label);
     setOpenDialog(false);
-    console.log("Selected Sort:", option.id);
   };
 
   return (
-    <div id='mainlisting'>
-      <ProductFilter category={category} setCategory={setCategory} brand={brand} setBrand={setBrand} />
+    <div className="listing-container">
 
-      <div id='productlist'>
-        <div id='productlistdiv'>
-          <h1>All Products</h1>
 
-          <div id='productlistoptions'>
-            <p>10 products</p>
-            <div id='sort' onClick={() => setOpenDialog(!openDialog)}>
-              <BiSortAlt2 /> {selectedSort || "Sort By"}
+      <div className="listing-main">
+        {/* Sidebar Filter */}
+        <aside className={`filter-sidebar ${showFilters ? 'show-mobile' : ''}`}>
+          <div className="filter-header">
+            <h3>Filters</h3>
+            <button 
+              className="close-filters-btn"
+              onClick={() => setShowFilters(false)}
+            >
+              ×
+            </button>
+          </div>
+          <ProductFilter 
+            category={category} 
+            setCategory={setCategory} 
+            brand={brand} 
+            setBrand={setBrand} 
+          />
+        </aside>
+
+        {/* Main Content */}
+        <main className="products-section">
+          {/* Controls Bar */}
+          <div className="controls-bar">
+            <div className="controls-left">
+              <button 
+                className="filter-toggle-btn"
+                onClick={() => setShowFilters(!showFilters)}
+              >
+                <FiFilter />
+                Filters
+              </button>
+              <span className="product-count">
+                {products?.length || 0} products found
+              </span>
+            </div>
+
+            <div className="controls-right">
+              {/* View Toggle */}
+              <div className="view-toggle">
+                <button 
+                  className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                  onClick={() => setViewMode('grid')}
+                >
+                  <BiGrid />
+                </button>
+                <button 
+                  className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+                  onClick={() => setViewMode('list')}
+                >
+                  {/* <BiList /> */}
+                </button>
+              </div>
+
+              {/* Sort Dropdown */}
+              <div className="sort-container">
+                <button 
+                  className="sort-btn"
+                  onClick={() => setOpenDialog(!openDialog)}
+                >
+                  <BiSortAlt2 />
+                  {selectedSort || "Sort By"}
+                </button>
+                
+                {openDialog && (
+                  <div className="sort-dropdown">
+                    {sortOptions.map((option) => (
+                      <button
+                        key={option.id}
+                        className="sort-option"
+                        onClick={() => handleSelect(option)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-    <div id="productsgrid">
-  {products?.map((product) => (
-    <div key={product._id} className="productcard" onClick={()=>{navigate(`/shop/product/${product._id}`)}}>
-      <img src={product.productImage} alt={product.title} />
-      <h3>{product.title}</h3>
-      {product.salePrice > 0 ? (
-        <div className="price-row">
-          <span className="old-price">${product.price}</span>
-          <span className="sale-price">${product.salePrice}</span>
-        </div>
-      ) : (
-        <p className="price">${product.price}</p>
-      )}
 
-      <p className="description">{product.description}</p>
-      <p className="brand">{product.brand}</p>
-    </div>
-  ))}
-</div>
-
+          {/* Products Grid */}
+          <div className={`products-grid ${viewMode} ${isLoading ? 'loading' : ''}`}>
+            {isLoading ? (
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Loading amazing products...</p>
+              </div>
+            ) : products?.length > 0 ? (
+              products.map((product) => (
+                <div 
+                  key={product._id} 
+                  className="product-card"
+                  onClick={() => navigate(`/shop/product/${product._id}`)}
+                >
+                  <div className="product-image-container">
+                    <img 
+                      src={product.productImage} 
+                      alt={product.title}
+                      className="product-image"
+                    />
+                    <div className="product-overlay">
+                      <button className="quick-view-btn">Quick View</button>
+                    </div>
+                  </div>
+                  
+                  <div className="product-info">
+                    <h3 className="product-title">{product.title}</h3>
+                    <p className="product-brand">{product.brand}</p>
+                    
+                    <div className="price-section">
+                      {product.salePrice > 0 ? (
+                        <div className="price-container">
+                          <span className="sale-price">${product.salePrice}</span>
+                          <span className="original-price">${product.price}</span>
+                          <span className="discount-badge">
+                            {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="regular-price">${product.price}</span>
+                      )}
+                    </div>
+                    
+                    <p className="product-description">{product.description}</p>
+                    
+                    <button className="add-to-cart-btn">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="empty-state">
+                <div className="empty-icon">🛍️</div>
+                <h3>No products found</h3>
+                <p>Try adjusting your filters or search terms</p>
+                <button 
+                  className="clear-filters-btn"
+                  onClick={() => {
+                    setCategory([]);
+                    setBrand([]);
+                  }}
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
+          </div>
+        </main>
       </div>
 
-      {openDialog && (
-        <div className="sort-overlay" onClick={() => setOpenDialog(false)}>
-          <div className="sort-dialog" onClick={(e) => e.stopPropagation()}>
-            <h3>Sort Options</h3>
-            {sortOptions.map((option) => (
-              <button
-                key={option.id}
-                className="sort-option-btn"
-                onClick={() => handleSelect(option)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Overlay for mobile filters */}
+      {showFilters && <div className="overlay" onClick={() => setShowFilters(false)}></div>}
     </div>
   );
 };

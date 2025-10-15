@@ -11,7 +11,7 @@ const dbconnect =async()=>{
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  console.log("MongoDB connected");
+  console.log("MongoDB connected"); 
 } 
 
 dbconnect(); 
@@ -59,4 +59,4 @@ app.use("/api/shop/cart", shopCartRouter);
 
 // app.use("/api/common/feature", commonFeatureRouter); 
 
-app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));   
+app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));    

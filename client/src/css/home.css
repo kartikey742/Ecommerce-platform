@@ -1,0 +1,294 @@
+/* src/components/common/HeroCarousel.css */
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* Adjust height as needed */
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+.slider-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  /* The "Jaw-Breaking" Ken Burns Effect */
+  animation: kenburns 15s infinite;
+}
+
+.slide.active .slide-background {
+    animation-play-state: running;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.1) translate(-2%, 2%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+.slide-content {
+  position: relative;
+  top: 100px;
+  z-index: 2;
+  color: #fff;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+  border-radius: 8px;
+  width: 600px;
+  font-size: small;
+}
+
+/* Animate text entrance */
+.slide.active .slide-headline {
+    animation: fadeInDown 1s ease-out 0.5s both;
+}
+.slide.active .slide-subtext {
+    animation: fadeInDown 1s ease-out 0.8s both;
+}
+.slide.active .slide-cta {
+    animation: fadeInUp 1s ease-out 1.1s both;
+}
+
+.slide-headline {
+ 
+  margin: 0 0 10px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.slide-subtext {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.slide-cta {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff; /* Example color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.slide-cta:hover {
+  transform: translateY(-3px);
+  background-color: #0056b3;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: #ffffff;
+}
+
+/* Simple animation keyframes */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* src/components/common/ShopByCategory.css */
+
+.shop-by-category {
+  padding: 3rem 0;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #212529;
+}
+
+.category-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+ 
+  border-radius: 5px;
+  padding: 1rem 4rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* - 0px 0px: Centers the shadow (no horizontal or vertical offset).
+    - 15px: Sets the blur radius (how soft the shadow is).
+    - rgba(0, 0, 0, 0.1): A semi-transparent black color.
+  */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  
+  /* A much stronger shadow on hover */
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.5);
+}
+.category-logo-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Makes it a circle */
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.category-item:hover .category-logo-wrapper {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background-color: #e9ecef;
+}
+
+.category-logo {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.category-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #495057;
+}
+/* src/css/common/Card.css */
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 1rem 3rem;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* The centered, prominent shadow you wanted */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.icon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.5);
+}
+
+.icon-card-wrapper {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.icon-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* src/components/common/ShopByBrand.css */
+
+.shop-by-brand {
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #212529;
+}
+
+.brand-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+}

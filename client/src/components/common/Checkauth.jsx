@@ -33,7 +33,7 @@ if(isLoading){
     if (user?.role === "admin") {
       return <Navigate to="/admin/dashboard" />;
     } else {
-      return <Navigate to="/shop/home" />;
+      return <Navigate to="/" />;
     }
   }
 

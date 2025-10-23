@@ -1,6 +1,6 @@
 
 import { useState ,useEffect} from "react";
-
+import '../../../css/AdminView.css';
 
 export default function ImageUpload({ fileRef,name,setFormData,setPreview,preview,uploading,setUploading, formData ,editingProduct}) {
     

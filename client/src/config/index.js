@@ -59,3 +59,54 @@ export const addProductFormElements = [
     placeholder: "Enter total stock",
   },
 ];
+
+export const addressFormControls = [
+  {
+    label: "Address",
+    name: "address",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your address",
+  },
+  {
+    label: "City",
+    name: "city",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your city",
+  },
+  {
+    label: "Pincode",
+    name: "pincode",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your pincode",
+  },
+  {
+    label: "Phone",
+    name: "phone",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your phone number",
+  },
+  {
+    label: "Notes",
+    name: "notes",
+    componentType: "textarea",
+    placeholder: "Enter any additional notes",
+  },
+  {
+    label: "State",
+    name: "state",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your state",
+  },
+  {
+    label: "Type",
+    name: "type",
+    componentType:'input',
+    type: "text",
+    placeholder: "Enter address type (e.g., Home, Office)",
+  },
+];

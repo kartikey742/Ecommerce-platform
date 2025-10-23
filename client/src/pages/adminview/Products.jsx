@@ -1,21 +1,14 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import AddProductModal from '../../components/adminview/product/AddProductModal'
-export const Products = () => {
+import { FiEdit } from "react-icons/fi";
+import { MdDeleteOutline } from "react-icons/md";
+import { IoStorefrontOutline } from "react-icons/io5";
+import '../../css/AdminView.css'
+export const Products = ({ products, setProducts ,fetchProducts}) => {
     const [editingProduct, setEditingProduct] = useState(null);
-  const [products, setProducts] = useState([]);
-    const fetchProducts = async () => {
-    const res = await fetch(`${process.env.REACT_APP_BASE_URL}/admin/products/get`, {
-      credentials: "include",
-    });
-    const data = await res.json();
-    console.log(data.data);
-    setProducts(data.data);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+ 
+   
 const Delete=async(id)=>{
 const res=await fetch(process.env.REACT_APP_BASE_URL+`/admin/products/delete/${id}`,{
          method: "DELETE",
@@ -30,23 +23,44 @@ const res=await fetch(process.env.REACT_APP_BASE_URL+`/admin/products/delete/${i
 
 }
   return (
-    <div>
-      <AddProductModal editingProduct={editingProduct} fetchProducts={fetchProducts} setEditingProduct={setEditingProduct} />
+    <div className="admin-products-container">
+      <div className="admin-products-header">
+        <h2 className="admin-products-title">
+          <IoStorefrontOutline className="admin-page-icon" />
+          Products Management
+        </h2>
+        <AddProductModal editingProduct={editingProduct} fetchProducts={fetchProducts} setEditingProduct={setEditingProduct} />
+      </div>
 
-      <h2>All Products</h2>
-      <ul>
-        {products?.map((p) => (
-          <li key={p._id}>
-            {p.title} - ${p.price}
-            {p.description}
-            <button onClick={() => {setEditingProduct(p)
-              console.log(p);
-              
-            }}>Edit</button>
-            <button onClick={() =>Delete(p._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div className="admin-products-list">
+        <h2>All Products</h2>
+        <ul>
+          {products?.map((p) => (
+            <li key={p._id} className="admin-product-item">
+              <div className="admin-product-image">
+                <img src={p.productImage} alt={p.title} />
+              </div>
+              <div className="admin-product-info">
+                <div className="admin-product-title">{p.title}</div>
+                <div className="admin-product-price">${p.price}</div>
+                <div className="admin-product-description">{p.description}</div>
+              </div>
+              <div className="admin-product-actions">
+                <button className="admin-edit-btn" onClick={() => {setEditingProduct(p)
+                  console.log(p);
+                }}>
+                  <FiEdit className="admin-btn-icon" />
+                  Edit
+                </button>
+                <button className="admin-delete-btn" onClick={() =>Delete(p._id)}>
+                  <MdDeleteOutline className="admin-btn-icon" />
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

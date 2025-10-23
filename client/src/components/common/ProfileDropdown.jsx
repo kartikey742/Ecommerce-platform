@@ -38,7 +38,7 @@ export const ProfileDropdown = () => {
           <button className="dropdown-item" onClick={logout}>
             Logout
           </button>
-          <button className="dropdown-item" onClick={() => navigate('account')}>
+          <button className="dropdown-item" onClick={() => navigate('/shop/account')}>
             Account
           </button>
         </div>

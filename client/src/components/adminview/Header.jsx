@@ -2,6 +2,9 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { setUser,setIsAuthenticated } from '../../store/authSlice';
 import { useDispatch } from 'react-redux';
+import { MdAdminPanelSettings } from "react-icons/md";
+import { BiLogOut } from "react-icons/bi";
+import '../../css/AdminView.css';
 export const Header = () => {
   const dispatch=useDispatch()
   const logout=async()=>{
@@ -17,8 +20,17 @@ export const Header = () => {
   }
 
   return (
-    <div>
-      <button onClick={logout}>log out</button>
+    <div className="admin-header">
+      <div className="admin-header-title">
+        <MdAdminPanelSettings className="admin-header-icon" />
+        Admin Panel
+      </div>
+      <div className="admin-header-actions">
+        <button className="admin-logout-btn" onClick={logout}>
+          <BiLogOut className="admin-logout-icon" />
+          Log Out
+        </button>
+      </div>
     </div>
   )
 }

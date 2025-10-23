@@ -1,47 +1,328 @@
-.register-container {
-  max-width: 400px;
-  margin: 20px auto;
+.register-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
+  position: relative;
 }
 
-.register-form {
+.register-page-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.15)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.register-auth-form {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInScale 0.8s ease-out;
   display: flex;
   flex-direction: column;
+    gap: 20px;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.register-auth-form h2 {
+  margin: 0 0 30px 0;
+  text-align: center;
+  color: #2d3748;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.register-auth-form h2::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
+}
+
+.register-form-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+}
+
+.register-form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.register-form-group input,
+.register-form-group select {
+  color: black;   
+  padding: 16px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 16px;
+  background: #f8fafc;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  appearance: none;
+  box-sizing: border-box;
+}
+
+.register-form-group select {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%234a5568"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 18px;
+  padding-right: 50px;
+}
+
+.register-form-group input:focus,
+.register-form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.register-form-group input:hover,
+.register-form-group select:hover {
+  border-color: #cbd5e0;
+  background: #fff;
+}
+
+.register-submit-btn {
+  padding: 18px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.register-submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+
+.register-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+}
+
+.register-submit-btn:hover::before {
+  left: 100%;
+}
+
+.register-submit-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.register-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.register-error-text {
+  color: #e53e3e;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+  animation: slideInError 0.3s ease-out;
+  background: rgba(229, 62, 62, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #e53e3e;
+}
+
+@keyframes slideInError {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Form Grid for Better Layout */
+.register-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
+.register-form-row .register-form-group {
+  margin: 0;
 }
 
-.form-group input,
-.form-group select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.submit-btn {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
+/* Custom Checkbox Styling */
+.register-form-group input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
   cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.submit-btn:hover {
-  background-color: #0056b3;
+.register-form-group input[type="checkbox"]:hover {
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.error-text {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
+.register-form-group input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.register-form-group input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+  animation: checkmarkSlide 0.3s ease-out;
+}
+
+@keyframes checkmarkSlide {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%) rotate(45deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -60%) rotate(45deg) scale(1);
+  }
+}
+
+.register-form-group input[type="checkbox"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+.register-form-group label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.register-form-group label input[type="checkbox"] + span {
+  margin-left: 0;
+  color: #4a5568;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .register-page-container {
+    padding: 15px;
+  }
+  
+  .register-auth-form {
+    padding: 30px 20px;
+    border-radius: 20px;
+
+  }
+  
+  .register-auth-form h2 {
+    font-size: 28px;
+  }
+  
+  .register-form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .register-form-row .register-form-group {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-auth-form h2 {
+    font-size: 24px;
+  }
+  
+  .register-form-group input,
+  .register-form-group select {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+  
+  .register-submit-btn {
+    padding: 16px;
+    font-size: 15px;
+  }
 }

@@ -1,7 +1,10 @@
 import { useState ,useEffect,useRef} from "react";
 import { addProductFormElements } from "../../../config"; 
 import ImageUpload from "./ImageUpload";
-
+import { IoAdd } from "react-icons/io5";
+import { MdClose } from "react-icons/md";
+import { MdSave } from "react-icons/md";
+import '../../../css/AdminView.css';
 
 export default function AddProductModal({ editingProduct,fetchProducts,setEditingProduct }) {
   const [open, setOpen] = useState(false);
@@ -48,7 +51,10 @@ method="PUT";
     if (res.ok) {
       fetchProducts(); // refresh list
       setOpen(false); // close modal
-
+      setEditingProduct(null);
+      setFormData({});
+      setPreview(null);
+      
       // clear only file input
       if (fileRef.current) {
         fileRef.current.value = "";
@@ -60,6 +66,7 @@ method="PUT";
     <div className="add-product-wrapper">
       <button className="add-product-open-btn" onClick={() =>{ setOpen(true) 
         }}>
+         <IoAdd className="add-product-btn-icon" />
          Add Product
       </button>
  
@@ -67,24 +74,27 @@ method="PUT";
         <div
           className="add-product-overlay"
           onClick={() => setOpen(false)}
-        ></div>
-      )}
-
-      <div className={`add-product-modal ${open ? "open" : ""}`}>
+        >
+          <div 
+            className={`add-product-modal ${open ? "open" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
         <div className="add-product-header">
-          <h2>Add Product</h2>
+          <h2>{editingProduct ? "Edit Product" : "Add Product"}</h2>
           <button
           disabled={uploading}
             className="add-product-close-btn"
-            onClick={() =>{ setOpen(false)
-                setEditingProduct(null)
-                setFormData({}) 
-                fileRef.current.value = "";
+            onClick={() => {
+                setOpen(false);
+                setEditingProduct(null);
+                setFormData({});
                 setPreview(null);
-            }
-            }
+                if (fileRef.current) {
+                  fileRef.current.value = "";
+                }
+            }}
           >
-            ✖
+            <MdClose />
           </button>
         </div>
 
@@ -140,13 +150,19 @@ method="PUT";
           ))}
 
           <button type="submit" className="add-product-submit-btn" disabled={uploading}>
-            {
-uploading ? "Uploading Image to cloudinary..." :editingProduct?"Save": " Add Product"
-            }
-           
+            {uploading ? (
+              "Uploading Image to cloudinary..."
+            ) : (
+              <>
+                {editingProduct ? <MdSave className="add-product-btn-icon" /> : <IoAdd className="add-product-btn-icon" />}
+                {editingProduct ? "Save Changes" : "Add Product"}
+              </>
+            )}
           </button>
         </form>
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

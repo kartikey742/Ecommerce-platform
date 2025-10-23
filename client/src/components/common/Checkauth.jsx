@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import { useSelector } from "react-redux";
+import { Loader } from "./Loader";
 function CheckAuth({ isAuthenticated, user, children }) {
   const isLoading = useSelector((state) => state.auth.isLoading);
   const location = useLocation();
@@ -8,7 +9,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
   console.log(location.pathname, isAuthenticated);
 
 if(isLoading){
-  return <div>Loading...</div>;
+  return <div><Loader></Loader></div>;
 }
 
   if (

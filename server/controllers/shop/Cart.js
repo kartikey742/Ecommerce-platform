@@ -53,6 +53,8 @@ console.log(userId,productId,quantity);
 };
 
 const fetchCartItems = async (req, res) => {
+  console.log('here');
+  
   try {
     const { userId } = req.params;
 

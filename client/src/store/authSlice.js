@@ -11,7 +11,7 @@ const initalState = {
         setUser: (state, action) => {  
           state.user = action.payload;
           state.isLoading = false;
-          console.log(state.isLoading);
+  
         },
         setIsAuthenticated: (state, action) => {
           state.isAuthenticated = action.payload;

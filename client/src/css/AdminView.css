@@ -1,0 +1,967 @@
+/* ============================================
+   ADMIN VIEW - COMPREHENSIVE STYLING
+   ============================================ */
+
+/* CSS Variables for consistent theming */
+:root {
+  --admin-primary: #667eea;
+  --admin-secondary: #764ba2;
+  --admin-success: #10b981;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef4444;
+  --admin-light: #f8fafc;
+  --admin-dark: #1e293b;
+  --admin-border: #e2e8f0;
+  --admin-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --admin-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --admin-radius: 12px;
+  --admin-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global Admin Layout Reset */
+.admin-main-content * {
+  box-sizing: border-box;
+}
+
+/* Ensure admin pages don't conflict with global styles */
+.admin-products-container,
+.admin-dashboard-container,
+.admin-orders-container,
+.admin-features-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Improve touchpad scrolling - Force hardware acceleration */
+.admin-main-content {
+  will-change: scroll-position;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.admin-products-container,
+.admin-dashboard-container,
+.admin-orders-container,
+.admin-features-container {
+  position: relative;
+  will-change: transform;
+}
+
+/* ============================================
+   ADMIN LAYOUT STYLES
+   ============================================ */
+
+/* Admin Header Component */
+.admin-header {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: var(--admin-shadow-lg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-header-icon {
+  font-size: 1.8rem;
+}
+
+.admin-header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-logout-icon {
+  font-size: 1.2rem;
+}
+
+.admin-logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Admin Sidebar Component */
+.admin-sidebar {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 260px;
+  height: calc(100vh - 80px);
+  background: white;
+  border-right: 2px solid var(--admin-border);
+  padding: 2rem 0;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  color: var(--admin-dark);
+  cursor: pointer;
+  transition: var(--admin-transition);
+  border-left: 4px solid transparent;
+  font-weight: 500;
+}
+
+.admin-sidebar-item:hover {
+  background: var(--admin-light);
+  border-left-color: var(--admin-primary);
+  color: var(--admin-primary);
+}
+
+.admin-sidebar-item.active {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  border-left-color: var(--admin-primary);
+  color: var(--admin-primary);
+  font-weight: 600;
+}
+
+.admin-sidebar-icon {
+  font-size: 1.2rem;
+  min-width: 20px;
+}
+
+/* Main Content Area */
+.admin-main-content {
+  margin-left: 260px;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
+  background: #f8fafc;
+  padding: 2rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+}
+
+/* ============================================
+   DASHBOARD PAGE STYLES
+   ============================================ */
+
+.admin-dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-dashboard-header {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-dashboard-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.admin-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.admin-stat-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  transition: var(--admin-transition);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.admin-stat-icon {
+  font-size: 2.5rem;
+  color: var(--admin-primary);
+  margin-bottom: 1rem;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.admin-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+}
+
+.admin-stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin-bottom: 0.5rem;
+}
+
+.admin-stat-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* ============================================
+   PRODUCTS PAGE STYLES
+   ============================================ */
+
+.admin-products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.admin-products-header {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-products-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-page-icon {
+  font-size: 2.2rem;
+  color: var(--admin-primary);
+}
+
+.admin-products-list {
+  background: white;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-products-list h2 {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  padding: 1.5rem 2rem;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.admin-products-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: none;
+  overflow: visible;
+}
+
+.admin-product-item {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--admin-transition);
+}
+
+.admin-product-item:hover {
+  background: var(--admin-light);
+}
+
+.admin-product-item:last-child {
+  border-bottom: none;
+}
+
+.admin-product-info {
+  flex: 1;
+}
+
+.admin-product-image {
+  width: 80px;
+  height: 80px;
+  margin-right: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--admin-shadow);
+  flex-shrink: 0;
+}
+
+.admin-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-product-title {
+  font-weight: 600;
+  color: var(--admin-dark);
+  margin-bottom: 0.25rem;
+}
+
+.admin-product-price {
+  color: var(--admin-primary);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.admin-product-description {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.admin-product-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-edit-btn, .admin-delete-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.admin-btn-icon {
+  font-size: 1rem;
+}
+
+.admin-edit-btn {
+  background: var(--admin-primary);
+  color: white;
+}
+
+.admin-edit-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+}
+
+.admin-delete-btn {
+  background: var(--admin-danger);
+  color: white;
+}
+
+.admin-delete-btn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   ADD PRODUCT MODAL STYLES
+   ============================================ */
+
+.add-product-wrapper {
+  position: relative;
+}
+
+.add-product-open-btn {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--admin-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  box-shadow: var(--admin-shadow);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-product-btn-icon {
+  font-size: 1.2rem;
+}
+
+.add-product-open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.add-product-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.add-product-modal {
+  position: relative;
+  background: white;
+  border-radius: var(--admin-radius);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+
+.add-product-modal.open {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.add-product-header {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius) var(--admin-radius) 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-product-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.add-product-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.add-product-close-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.add-product-close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.add-product-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.add-product-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-product-form-group label {
+  font-weight: 600;
+  color: var(--admin-dark);
+  font-size: 0.9rem;
+}
+
+.add-product-form-group input,
+.add-product-form-group textarea,
+.add-product-form-group select {
+  padding: 0.75rem;
+  border: 2px solid var(--admin-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: var(--admin-transition);
+  background: white;
+}
+
+.add-product-form-group input:focus,
+.add-product-form-group textarea:focus,
+.add-product-form-group select:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.add-product-form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.add-product-submit-btn {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-product-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.add-product-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   IMAGE UPLOAD COMPONENT STYLES
+   ============================================ */
+
+.image-upload-wrapper {
+  border: 2px dashed var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 2rem;
+  text-align: center;
+  transition: var(--admin-transition);
+  background: var(--admin-light);
+}
+
+.image-upload-wrapper:hover {
+  border-color: var(--admin-primary);
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.image-upload-wrapper input[type="file"] {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--admin-transition);
+}
+
+.image-upload-wrapper input[type="file"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.image-upload-wrapper img {
+  margin-top: 1rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================
+   ORDERS PAGE STYLES
+   ============================================ */
+
+.admin-orders-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-orders-header {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-orders-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin: 0;
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-order-card {
+  background: white;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  transition: var(--admin-transition);
+  overflow: hidden;
+}
+
+.admin-order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.admin-order-card-header {
+  background: linear-gradient(135deg, var(--admin-light), #e2e8f0);
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-order-id {
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-order-date {
+  color: #64748b;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-order-icon {
+  font-size: 1rem;
+}
+
+.admin-order-body {
+  padding: 1.5rem;
+}
+
+.admin-order-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.admin-status-icon {
+  font-size: 1rem;
+}
+
+.admin-order-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--admin-primary);
+  margin-bottom: 1rem;
+}
+
+.admin-order-details-btn {
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--admin-transition);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.admin-order-details-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+/* ============================================
+   FEATURES PAGE STYLES
+   ============================================ */
+
+.admin-features-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-features-header {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-features-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--admin-primary), var(--admin-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.admin-feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  transition: var(--admin-transition);
+  text-align: center;
+}
+
+.admin-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.admin-feature-icon {
+  font-size: 3rem;
+  color: var(--admin-primary);
+  margin-bottom: 1rem;
+}
+
+.admin-feature-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--admin-dark);
+  margin-bottom: 1rem;
+}
+
+.admin-feature-description {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Responsive Design Improvements */
+
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    width: 220px;
+  }
+  
+  .admin-main-content {
+    margin-left: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+    transition: var(--admin-transition);
+  }
+  
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .admin-main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .admin-header {
+    padding: 1rem;
+  }
+  
+  .admin-dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-products-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .admin-product-item {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .add-product-modal {
+    width: 95%;
+    max-width: 95%;
+    margin: 0;
+    transform: scale(1);
+  }
+  
+  .add-product-form {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .admin-dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .admin-products-title,
+  .admin-orders-title,
+  .admin-features-title {
+    font-size: 1.5rem;
+  }
+  
+  .admin-orders-grid,
+  .admin-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.admin-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--admin-primary);
+}
+
+.admin-empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #64748b;
+}
+
+.admin-empty-state h3 {
+  color: var(--admin-dark);
+  margin-bottom: 0.5rem;
+}
+
+/* Custom Scrollbar */
+.admin-sidebar::-webkit-scrollbar,
+.add-product-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track,
+.add-product-modal::-webkit-scrollbar-track {
+  background: var(--admin-light);
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb,
+.add-product-modal::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb:hover,
+.add-product-modal::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { LuWarehouse } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -50,6 +50,7 @@ export const shoppingViewHeaderMenuItems = [
 export const Header = () => {
   const {user}=useSelector((state)=>state.auth)
   const navigate=useNavigate()
+ 
   return (
     <div className='shoppingheader'>
       <div id='logo'>
@@ -68,7 +69,7 @@ export const Header = () => {
       <MdOutlineShoppingCart  size={25} onClick={()=>navigate("/shop/cart")} cursor="pointer"/>
       <ProfileDropdown />   
     </div>):
-    <div id='logo'>
+    <div id='logo2'>
       <button onClick={()=>navigate("/auth/login")}>Login</button>
       <button onClick={()=>navigate("/auth/register")}>Register</button>
     </div>

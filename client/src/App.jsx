@@ -1,7 +1,7 @@
   import { useState } from 'react'
   import './App.css'
-  import './css/register.css'
-  import './css/login.css'
+  
+ 
   import './css/product.css'
   import './css/shopping.css'
   import './css/DetailsPage.css'
@@ -30,10 +30,14 @@ import { useNavigate } from 'react-router-dom'
 import { DetailsPage } from './pages/shoppingview/DetailsPage'
 import {Cart} from './pages/Cart'
 import { Header } from './components/shoppingview/Header'
+import { PaymentSuccessPage } from './pages/PaymentSuccessPage'
 
   function App() {
       const navigate = useNavigate();
     const dispatch=useDispatch();
+    const [products,setProducts]=useState([]);
+    const [orders,setOrders]=useState([])
+    const [cart, setCart] = useState(null);
   const{isAuthenticated}=useSelector((state)=>state.auth)
   const{user}=useSelector((state)=>state.auth)
 useEffect(() => {
@@ -66,36 +70,59 @@ useEffect(() => {
 
     checkAuth();
   }, []);
-  const handle=async(role)=>{
-    console.log(role);
-    
-    dispatch(setIsLoading(true));
-    dispatch(setUser({name:"super admin",role:role}));
-    dispatch(setIsAuthenticated(true));
-    dispatch(setIsLoading(false));  
-    navigate('auth/login')
-  }
+ const fetchProducts = async () => {
+    const res = await fetch(`${process.env.REACT_APP_BASE_URL}/admin/products/get`, {
+      credentials: "include",
+    });
+    const data = await res.json();
+    console.log(data.data);
+    setProducts(data.data);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  useEffect(()=>{ 
+      const fetchOrders=async()=>{
+            try{
+              const res=await fetch(process.env.REACT_APP_BASE_URL +`/admin/orders/get`);
+              const data=await res.json();
+              console.log(data);
+              setOrders(data.data||[]);
+              
+            }
+            catch(err){
+              console.log(err);
+              
+            }
+          }
+          fetchOrders()
+        },[])
     return (
       <div> 
-        <Header>  </Header>
+        {/* <Header></Header> */}
+    {(!isAuthenticated || (user && user.role === 'consumer')) && <Header></Header>}
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/auth' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><UserLayout/></CheckAuth>}>
           <Route path='register' element={<Register/>}/>
           <Route path='login' element={<Login/>}/>
         </Route>
-        <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><AdminLayout/></CheckAuth>}>
-        <Route path='dashboard' element={<Dashboard/>}/>
-        <Route path='products' element={<Products/>}/>
+        <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><AdminLayout orders={orders} /></CheckAuth>}>
+        <Route path='dashboard' element={<Dashboard products={products} orders={orders} />}/>
+        <Route path='products' element={<Products products={products} setProducts={setProducts} fetchProducts={fetchProducts} />}/>
         <Route path='features' element={<Features/>}/>
-        <Route path='orders' element={<Orders/>}/>
+        <Route path='orders' element={<Orders orders={orders} setOrders={setOrders} />}/>
         </Route>
         <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><ShoppingLayout/></CheckAuth>}>
+        
         <Route path='listing' element={<Listing/>}/>
         <Route path='account' element={<Account/>}/>
-        <Route path='checkout' element={<Checkout/>}/>
+        <Route path='checkout' element={<Checkout cart={cart} setCart={setCart} />}/>
         <Route path='product/:productId' element={<DetailsPage />} />
-        <Route path='cart' element={<Cart />} />
+        <Route path='cart' element={<Cart isCheckout={false} setCart={setCart} cart={cart} />} />
+          <Route path="payment-success" element={<PaymentSuccessPage />} />
         </Route> 
         <Route path='unauth-page' element={<Unauthpage></Unauthpage>}/>
       </Routes>

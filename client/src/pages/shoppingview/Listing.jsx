@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
+
 const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },
   { id: "price-hightolow", label: "Price: High to Low" },
@@ -17,8 +18,8 @@ export const Listing = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedSort, setSelectedSort] = useState("Price: Low to High");
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [brand, setBrand] = useState([]);
+  const [category, setCategory] = useState(localStorage.getItem('category') ? JSON.parse(localStorage.getItem('category')) : []);
+  const [brand, setBrand] = useState(localStorage.getItem('brand') ? JSON.parse(localStorage.getItem('brand')) : []);
   const [isLoading, setIsLoading] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [showFilters, setShowFilters] = useState(false);
@@ -37,6 +38,7 @@ export const Listing = () => {
   useEffect(() => {
     const getProducts = async () => {
       const params = new URLSearchParams();
+     
       if (category.length) params.append('category', category.join(','));
       if (brand.length) params.append('brand', brand.join(','));
       params.append('sortBy', selectedSort);
@@ -179,14 +181,14 @@ export const Listing = () => {
                     <div className="price-section">
                       {product.salePrice > 0 ? (
                         <div className="price-container">
-                          <span className="sale-price">${product.salePrice}</span>
-                          <span className="original-price">${product.price}</span>
+                          <span className="sale-price">Rs.{product.salePrice}</span>
+                          <span className="original-price">Rs.{product.price}</span>
                           <span className="discount-badge">
                             {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
                           </span>
                         </div>
                       ) : (
-                        <span className="regular-price">${product.price}</span>
+                        <span className="regular-price">Rs.{product.price}</span>
                       )}
                     </div>
                     

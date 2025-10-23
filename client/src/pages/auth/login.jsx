@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { setIsAuthenticated, setUser } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
+import { Loader } from "../../components/common/Loader";
+import {toast} from 'react-toastify'
+import { setIsLoading } from "../../store/authSlice";
+ import '../../css/login.css'
 export  function Login() {
+  const {isLoading}=useSelector((state)=>state.auth);
+  console.log(isLoading);
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,6 +35,7 @@ const dispatch=useDispatch();
   };
 
   const handleSubmit = async(e) => {
+    dispatch(setIsLoading(true));
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -46,18 +54,25 @@ const dispatch=useDispatch();
          credentials: "include"
       });
       const data =await response.json();
+      console.log(data);
+      
       if(data.success){
         dispatch(setUser(data.user));
         dispatch(setIsAuthenticated(true));
       }
+      else{
+        toast.error(data.message);
+        dispatch(setIsLoading(false));
+      }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
+    <div className="login-page-container">
+      {isLoading &&<Loader/>}
+      <form className="login-auth-form" onSubmit={handleSubmit}>
         <h2>Login</h2>
 
-        <div className="form-group">
+        <div className="login-form-group">
           <label>Email:</label>
           <input
             type="email"
@@ -65,10 +80,10 @@ const dispatch=useDispatch();
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <span className="error-text">{errors.email}</span>}
+          {errors.email && <span className="login-error-text">{errors.email}</span>}
         </div>
 
-        <div className="form-group">
+        <div className="login-form-group">
           <label>Password:</label>
           <input
             type="password"
@@ -77,11 +92,11 @@ const dispatch=useDispatch();
             onChange={handleChange}
           />
           {errors.password && (
-            <span className="error-text">{errors.password}</span>
+            <span className="login-error-text">{errors.password}</span>
           )}
         </div>
 
-        <button type="submit" className="submit-btn">
+        <button type="submit" className="login-submit-btn">
           Login
         </button>
       </form>

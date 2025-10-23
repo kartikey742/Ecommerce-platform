@@ -1,7 +1,7 @@
 import {  useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import '../../css/register.css'
 
-// require("dotenv").config();
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -82,45 +82,45 @@ const handleSubmit =async (e) => {
 
 };
  return (
-<div className="register-container">
+<div className="register-page-container">
+<form onSubmit={handleSubmit} className="register-auth-form" method='POST'>
 <h2>Register</h2>
-<form onSubmit={handleSubmit} className="register-form" method='POST'>
-<div className="form-group">
-<label>Full Name</label><br />
+<div className="register-form-group">
+<label>Full Name</label>
 <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
-{errors.fullName && <div className="error-text">{errors.fullName}</div>}
+{errors.fullName && <div className="register-error-text">{errors.fullName}</div>}
 </div>
 
 
-<div className="form-group">
-<label>Email</label><br />
+<div className="register-form-group">
+<label>Email</label>
 <input type="email" name="email" value={formData.email} onChange={handleChange} />
-{errors.email && <div className="error-text">{errors.email}</div>}
+{errors.email && <div className="register-error-text">{errors.email}</div>}
 </div>
 
-<div className="form-group">
-<label>User Name</label><br />
+<div className="register-form-group">
+<label>User Name</label>
 <input type="text" name="userName" value={formData.userName} onChange={handleChange} />
-{errors.UserName && <div className="error-text">{errors.userName}</div>}
+{errors.UserName && <div className="register-error-text">{errors.userName}</div>}
 </div>
 
 
-<div className="form-group">
-<label>Password</label><br />
+<div className="register-form-group">
+<label>Password</label>
 <input type="password" name="password" value={formData.password} onChange={handleChange} />
-{errors.password && <div className="error-text">{errors.password}</div>}
+{errors.password && <div className="register-error-text">{errors.password}</div>}
 </div>
 
 
-<div className="form-group">
-<label>Confirm Password</label><br />
+<div className="register-form-group">
+<label>Confirm Password</label>
 <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-{errors.confirmPassword && <div className="error-text">{errors.confirmPassword}</div>}
+{errors.confirmPassword && <div className="register-error-text">{errors.confirmPassword}</div>}
 </div>
 
 
-<div className="form-group">
-<label>Role</label><br />
+<div className="register-form-group">
+<label>Role</label>
 <select name="role" value={formData.role} onChange={handleChange}>
 <option value="student">consumer</option>
 <option value="instructor">admin</option>
@@ -128,15 +128,16 @@ const handleSubmit =async (e) => {
 </div>
 
 
-<div className="form-group">
+<div className="register-form-group">
 <label>
-<input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} /> I agree to the Terms & Conditions
+<input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} />
+<span>I agree to the Terms & Conditions</span>
 </label>
-{errors.terms && <div className="error-text">{errors.terms}</div>}
+{errors.terms && <div className="register-error-text">{errors.terms}</div>}
 </div>
 
 
-<button type="submit" className="submit-btn">Register</button>
+<button type="submit" className="register-submit-btn">Register</button>
 </form>
 </div>
 );

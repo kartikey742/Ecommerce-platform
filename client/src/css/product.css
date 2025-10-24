@@ -30,8 +30,7 @@
 /* Modal */
 .add-product-modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top:20px;
   width: 500px;
   max-width: 95%;
   background: #fff;

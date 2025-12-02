@@ -5,7 +5,7 @@
     import { useSelector } from 'react-redux';
     import { toast } from 'react-toastify';
     import { useNavigate } from 'react-router-dom';
-    export const Cart = ({isCheckout,setCart,cart,handleInitiatePaypalPayment}) => {
+    export const Cart = ({isCheckout,setCart,cart,handleInitiateRazorpayPayment}) => {
         
         const [loading, setLoading] = useState(true);
         const [error, setError] = useState(null);
@@ -117,7 +117,7 @@
             if (isCheckout) {
             console.log('hi');
             
-               handleInitiatePaypalPayment()
+               handleInitiateRazorpayPayment()
             } else {
                 // Proceed to checkout
                 navigate('/shop/checkout');

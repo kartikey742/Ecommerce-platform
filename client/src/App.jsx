@@ -99,9 +99,10 @@ useEffect(() => {
           }
           fetchOrders()
         },[])
+        console.log(localStorage);
+        
     return (
       <div> 
-        {/* <Header></Header> */}
     {(!isAuthenticated || (user && user.role === 'consumer')) && <Header></Header>}
       <Routes>
         <Route path='/' element={<Home/>}/>

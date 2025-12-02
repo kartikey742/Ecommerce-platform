@@ -31,7 +31,7 @@ const shopOrderRouter = require("./routes/shop/Order");
 
 app.use( 
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ecommerce-platform-lilac.vercel.app",
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
